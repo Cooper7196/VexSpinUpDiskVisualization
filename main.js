@@ -134,16 +134,18 @@ function diskPos(time, speed, angle) {
 
 function drawLaunch(speed, angle, dist, height) {
     let disk = new Image()
+    let goal = new Image()
     let ctx = diskCanvas.getContext("2d")
     let x = 0;
     let y = 0;
     let time = 0;
     let lastTimeStamp = 0;
-    console.log(diskCanvas.width, diskCanvas.height);
+
     disk.onload = function () {
         requestAnimationFrame(animate);
     }
     disk.src = "disk.png";   // load image
+    goal.src = "goal.png";   // load image
     function animate(timestamp) {
         if (lastTimeStamp == undefined) {
             requestAnimationFrame(animate);
@@ -152,7 +154,7 @@ function drawLaunch(speed, angle, dist, height) {
         if (lastTimeStamp === 0) {
             lastTimeStamp = timestamp;
         }
-        console.log("y: " + y + " x: " + x);
+        // console.log("y: " + y + " x: " + x);
         if (y > -0.1) {
             let speed = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - (0.635 - initHeight / 39.37))));
             elapsed = timestamp - lastTimeStamp;
@@ -163,11 +165,11 @@ function drawLaunch(speed, angle, dist, height) {
             x = speed * Math.cos(angle * Math.PI / 180) * time;
             diskHeight = diskPos(time, speed, angle) + initHeight / 39.37
             y = diskHeight;
-            // if (Math.abs(diskHeight - height) < 0.01) {
-            //     console.log("test");
-            // }
-            ctx.fillRect(dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - (0.635).map(0, dist + 1, 0, diskCanvas.height), 150, 100);
-            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.3, disk.height * 0.3);
+            if (Math.abs(diskHeight - height) < 0.01) {
+                console.log("test");
+            }
+            ctx.drawImage(goal, dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, dist + 1, 0, diskCanvas.height) - 70, goal.height * 0.5, goal.height * 0.5);
+            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
 
             lastTimeStamp = timestamp;
