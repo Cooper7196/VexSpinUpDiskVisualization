@@ -58,8 +58,7 @@ canvas.addEventListener('mousemove', event => {
     let y = event.clientY - bound.top - canvas.clientTop;
     x = round(x.map(0, size[0], 0, canvas.width));
     y = round(y.map(0, size[1], 0, canvas.height));
-    console.log(x, y);
-    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
+=    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
 
     inches = distX * 39.37;
     feet = Math.floor(inches / 12);
@@ -69,11 +68,11 @@ canvas.addEventListener('mousemove', event => {
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
         document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: " + round(velocities[x][y] / ((diameter / 39.37) * Math.PI) * 60) + " rpm";
-        console.log();
 
     }
     else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
+        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: N/A";
     }
 });
 
