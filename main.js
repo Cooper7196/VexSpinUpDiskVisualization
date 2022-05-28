@@ -161,12 +161,12 @@ function drawLaunch(speed, angle, dist, height) {
 
             time += elapsed / 1000;
             x = speed * Math.cos(angle * Math.PI / 180) * time;
-            diskHeight = diskPos(time, speed, angle)
+            diskHeight = diskPos(time, speed, angle) + initHeight / 39.37
             y = diskHeight;
             // if (Math.abs(diskHeight - height) < 0.01) {
             //     console.log("test");
             // }
-            ctx.fillRect(dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - (0.635 - initHeight / 39.37).map(0, dist + 1, 0, diskCanvas.height), 150, 100);
+            ctx.fillRect(dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - (0.635).map(0, dist + 1, 0, diskCanvas.height), 150, 100);
             ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.3, disk.height * 0.3);
 
 
