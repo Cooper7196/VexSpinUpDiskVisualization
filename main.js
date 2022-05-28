@@ -68,6 +68,20 @@ canvas.addEventListener('mousemove', event => {
     }
 });
 
+
+canvas.addEventListener('click', event => {
+    let bound = canvas.getBoundingClientRect();
+
+    let x = event.clientX - bound.left - canvas.clientLeft;
+    let y = event.clientY - bound.top - canvas.clientTop;
+    x = round(x.map(0, size[0], 0, canvas.width));
+    y = round(y.map(0, size[1], 0, canvas.height));
+    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, size[0], 0, 3.6576), 0.441706 - y.map(0, size[1], 0, 3.6576));
+    if (velocities[x][y] == velocities[x][y]) {
+        drawLaunch(velocities[x][y], angle, distX, (0.635 - initHeight / 39.37));
+    }
+});
+
 angleRangeElement.addEventListener('input', event => {
     angle = event.target.value;
     document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
@@ -82,7 +96,6 @@ angleRangeElement.addEventListener('change', event => {
         draw(velocities);
         document.querySelector("#loadingDiv").style.display = "none";
     }, 1000)
-
 });
 
 function draw(velocities) {
@@ -111,3 +124,62 @@ function generateMap(size) {
     }
     return velocities
 }
+
+
+
+function diskPos(time, speed, angle) {
+    return speed * Math.sin(angle * Math.PI / 180.0) * time - 4.9 * time * time;
+}
+
+
+function drawLaunch(speed, angle, dist, height) {
+    diskCanvas = document.getElementById('diskCanvas');
+    diskCanvas.width = diskCanvas.getBoundingClientRect().width;
+    diskCanvas.height = diskCanvas.getBoundingClientRect().height;
+    let disk = new Image()
+    let ctx = diskCanvas.getContext("2d")
+    let x = 0;
+    let y = 0;
+    let time = 0;
+    let lastTimeStamp = 0;
+    console.log(diskCanvas.width, diskCanvas.height);
+    disk.onload = function () {
+        requestAnimationFrame(animate);
+    }
+    disk.src = "disk.png";   // load image
+    function animate(timestamp) {
+        if (lastTimeStamp == undefined) {
+            requestAnimationFrame(animate);
+            return
+        }
+        if (lastTimeStamp === 0) {
+            lastTimeStamp = timestamp;
+        }
+        console.log("y: " + y + " x: " + x);
+        if (y > -0.1) {
+            elapsed = timestamp - lastTimeStamp;
+            ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
+
+
+            time += elapsed / 1000;
+            x = speed * Math.cos(angle * Math.PI / 180) * time;
+            diskHeight = diskPos(time, speed, angle)
+            y = diskHeight;
+            // if (Math.abs(diskHeight - height) < 0.01) {
+            //     console.log("test");
+            // }
+
+            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, (0.635 - initHeight / 39.37) + 0.2, 0, diskCanvas.height), disk.width * 0.3, disk.height * 0.3);
+
+
+            lastTimeStamp = timestamp;
+            requestAnimationFrame(animate);
+            // console.log(x, y);
+        }
+        else {
+            lastTimeStamp = 0;
+        }
+    }
+}
+
+drawLaunch();
