@@ -174,10 +174,7 @@ function drawLaunch(speed, angle, dist, height) {
             x = speed * Math.cos(angle * Math.PI / 180) * time;
             diskHeight = diskPos(time, speed, angle) + initHeight / 39.37
             y = diskHeight;
-            if (x > dist) {
-                console.log("test");
-            }
-            else {
+            if (x < dist) {
                 time += elapsed / 1000;
             }
             ctx.drawImage(goal, dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, dist + 1, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
