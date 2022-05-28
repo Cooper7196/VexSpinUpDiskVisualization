@@ -50,7 +50,6 @@ let startPos = [0, 0];
 let velocities = generateMap([canvas.width, canvas.height]);
 draw(velocities);
 
-
 canvas.addEventListener('mousemove', event => {
     let bound = canvas.getBoundingClientRect();
 
@@ -58,13 +57,14 @@ canvas.addEventListener('mousemove', event => {
     let y = event.clientY - bound.top - canvas.clientTop;
     x = round(x.map(0, size[0], 0, canvas.width));
     y = round(y.map(0, size[1], 0, canvas.height));
-    let distX = Math.hypot((3.6576 - 0.801612) - x.map(0, size[0], 0, 3.6576), 0.441706 - y.map(0, size[1], 0, 3.6576));
+    console.log(x, y);
+    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
 
     inches = distX * 39.37;
     feet = Math.floor(inches / 12);
     inches = round(inches % 12);
 
-    document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in";
+    document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in / " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
     }
@@ -73,6 +73,19 @@ canvas.addEventListener('mousemove', event => {
     }
 });
 
+window.addEventListener("resize", () => {
+    document.querySelector("#loadingDiv").style.display = "block";
+    setTimeout(function () {
+        canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
+        canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
+        console.log(canvas.width, canvas.height);
+        size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
+        velocities = generateMap(size);
+        draw(velocities);
+        document.querySelector("#loadingDiv").style.display = "none";
+        console.log(size);
+    }, 1000)
+});
 
 canvas.addEventListener('click', event => {
     let bound = canvas.getBoundingClientRect();
@@ -81,7 +94,7 @@ canvas.addEventListener('click', event => {
     let y = event.clientY - bound.top - canvas.clientTop;
     x = round(x.map(0, size[0], 0, canvas.width));
     y = round(y.map(0, size[1], 0, canvas.height));
-    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, size[0], 0, 3.6576), 0.441706 - y.map(0, size[1], 0, 3.6576));
+    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
     if (velocities[x][y] == velocities[x][y]) {
         drawLaunch(velocities[x][y], angle, distX, (0.635 - initHeight / 39.37));
     }
@@ -105,6 +118,14 @@ angleRangeElement.addEventListener('change', event => {
 
 document.getElementById("initHeight").addEventListener('input', event => {
     initHeight = event.target.value;
+    document.querySelector("#loadingDiv").style.display = "block";
+    console.log(document.querySelector("#loadingDiv").style.visibility);
+    angle = event.target.value;
+    setTimeout(function () {
+        velocities = generateMap(size);
+        draw(velocities);
+        document.querySelector("#loadingDiv").style.display = "none";
+    }, 1000)
     // document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
 });
 
@@ -177,8 +198,8 @@ function drawLaunch(speed, angle, dist, height) {
             if (x < dist) {
                 time += elapsed / 1000;
             }
-            ctx.drawImage(goal, dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, dist + 1, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
-            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
+            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 5.17262753, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
+            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
 
             lastTimeStamp = timestamp;
