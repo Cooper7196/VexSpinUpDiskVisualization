@@ -133,9 +133,6 @@ function diskPos(time, speed, angle) {
 
 
 function drawLaunch(speed, angle, dist, height) {
-    diskCanvas = document.getElementById('diskCanvas');
-    diskCanvas.width = diskCanvas.getBoundingClientRect().width;
-    diskCanvas.height = diskCanvas.getBoundingClientRect().height;
     let disk = new Image()
     let ctx = diskCanvas.getContext("2d")
     let x = 0;
@@ -157,7 +154,7 @@ function drawLaunch(speed, angle, dist, height) {
         }
         console.log("y: " + y + " x: " + x);
         if (y > -0.1) {
-            // let velocity = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - 0.635)));
+            let speed = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - (0.635 - initHeight / 39.37))));
             elapsed = timestamp - lastTimeStamp;
             ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
 
@@ -183,4 +180,6 @@ function drawLaunch(speed, angle, dist, height) {
     }
 }
 
-drawLaunch();
+diskCanvas = document.getElementById('diskCanvas');
+diskCanvas.width = diskCanvas.getBoundingClientRect().width;
+diskCanvas.height = diskCanvas.getBoundingClientRect().height;
