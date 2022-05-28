@@ -157,6 +157,7 @@ function drawLaunch(speed, angle, dist, height) {
         }
         console.log("y: " + y + " x: " + x);
         if (y > -0.1) {
+            // let velocity = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - 0.635)));
             elapsed = timestamp - lastTimeStamp;
             ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
 
@@ -168,8 +169,8 @@ function drawLaunch(speed, angle, dist, height) {
             // if (Math.abs(diskHeight - height) < 0.01) {
             //     console.log("test");
             // }
-
-            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, (0.635 - initHeight / 39.37) + 0.2, 0, diskCanvas.height), disk.width * 0.3, disk.height * 0.3);
+            ctx.fillRect(dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - (0.635 - initHeight / 39.37).map(0, dist + 1, 0, diskCanvas.height), 150, 100);
+            ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.3, disk.height * 0.3);
 
 
             lastTimeStamp = timestamp;
