@@ -58,10 +58,15 @@ canvas.addEventListener('mousemove', event => {
     let y = event.clientY - bound.top - canvas.clientTop;
     x = round(x.map(0, size[0], 0, canvas.width));
     y = round(y.map(0, size[1], 0, canvas.height));
-    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, size[0], 0, 3.6576), 0.441706 - y.map(0, size[1], 0, 3.6576));
-    document.getElementById("mousePos").innerHTML = "Position: " + round(x.map(0, size[0], 0, 144), 1) + "in  " + round(y.map(0, size[1], 0, 144), 1) + " in" + " Dist: " + round(distX, 2) + " m";
+    let distX = Math.hypot((3.6576 - 0.801612) - x.map(0, size[0], 0, 3.6576), 0.441706 - y.map(0, size[1], 0, 3.6576));
+
+    inches = distX * 39.37;
+    feet = Math.floor(inches / 12);
+    inches = round(inches % 12);
+
+    document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in";
     if (velocities[x][y] == velocities[x][y]) {
-        document.getElementById("velocity").innerHTML = round(velocities[x][y], 2) + " m/s";
+        document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
     }
     else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
@@ -96,6 +101,11 @@ angleRangeElement.addEventListener('change', event => {
         draw(velocities);
         document.querySelector("#loadingDiv").style.display = "none";
     }, 1000)
+});
+
+document.getElementById("initHeight").addEventListener('input', event => {
+    initHeight = event.target.value;
+    // document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
 });
 
 function draw(velocities) {
@@ -161,14 +171,16 @@ function drawLaunch(speed, angle, dist, height) {
             ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
 
 
-            time += elapsed / 1000;
             x = speed * Math.cos(angle * Math.PI / 180) * time;
             diskHeight = diskPos(time, speed, angle) + initHeight / 39.37
             y = diskHeight;
-            if (Math.abs(diskHeight - height) < 0.01) {
+            if (x > dist) {
                 console.log("test");
             }
-            ctx.drawImage(goal, dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, dist + 1, 0, diskCanvas.height) - 70, goal.height * 0.5, goal.height * 0.5);
+            else {
+                time += elapsed / 1000;
+            }
+            ctx.drawImage(goal, dist.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, dist + 1, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
             ctx.drawImage(disk, x.map(0, dist + 1, 0, diskCanvas.width), diskCanvas.height - y.map(0, dist + 1, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
 
