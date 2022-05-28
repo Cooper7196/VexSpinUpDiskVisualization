@@ -58,7 +58,7 @@ canvas.addEventListener('mousemove', event => {
     let y = event.clientY - bound.top - canvas.clientTop;
     x = round(x.map(0, size[0], 0, canvas.width));
     y = round(y.map(0, size[1], 0, canvas.height));
-=    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
+    let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
 
     inches = distX * 39.37;
     feet = Math.floor(inches / 12);
