@@ -39,6 +39,7 @@ var angleRangeElement = document.getElementById("angleRange");
 document.querySelector("#loadingDiv").style.display = "none";
 
 let angle = 45;
+let diameter = 4;
 let initHeight = 14;
 canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
 canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
@@ -67,6 +68,9 @@ canvas.addEventListener('mousemove', event => {
     document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in / " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
+        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: " + round(velocities[x][y] / ((diameter / 39.37) * Math.PI) * 60) + " rpm";
+        console.log();
+
     }
     else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
@@ -122,13 +126,19 @@ document.getElementById("initHeight").addEventListener('input', event => {
     console.log(document.querySelector("#loadingDiv").style.visibility);
     angle = event.target.value;
     setTimeout(function () {
-        velocities = generateMap(size);
-        draw(velocities);
-        document.querySelector("#loadingDiv").style.display = "none";
+        if (initHeight == event.target.value) {
+            velocities = generateMap(size);
+            draw(velocities);
+            document.querySelector("#loadingDiv").style.display = "none";
+        }
     }, 1000)
-    // document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
 });
 
+
+document.getElementById("flywheelDiameter").addEventListener('input', event => {
+    diameter = event.target.value;
+    document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
+});
 function draw(velocities) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (let i = 0; i < velocities.length; i++) {
@@ -199,8 +209,8 @@ function drawLaunch(speed, angle, dist, height) {
                 time += elapsed / 1000;
             }
             ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 5.17262753, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
-            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
+            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
