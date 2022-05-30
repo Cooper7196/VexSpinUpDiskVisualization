@@ -172,12 +172,36 @@ function diskPos(time, speed, angle) {
 }
 
 
+var TO_RADIANS = Math.PI / 180;
+function drawRotatedImage(context, image, x, y, angle) {
+    // save the current co-ordinate system 
+    // before we screw with it
+    context.save();
+
+    // move to the middle of where we want to draw our image
+    context.translate(x, y);
+
+    // rotate around that point, converting our 
+    // angle from degrees to radians 
+    context.rotate(-angle * TO_RADIANS);
+
+    // draw it up and to the left by half the width
+    // and height of the image 
+    context.drawImage(image, -(image.width * 0.1 / 2), -(image.height * 0.1 / 2), image.width * 0.1, image.height * 0.1);
+
+    // and restore the co-ords to how they were when we began
+    context.restore();
+}
+
+
 function drawLaunch(speed, angle, dist, height) {
     let disk = new Image()
     let goal = new Image()
     let ctx = diskCanvas.getContext("2d")
     let x = 0;
     let y = 0;
+    let lastX = 0;
+    let lastY = 0;
     let time = 0;
     let lastTimeStamp = 0;
 
@@ -206,13 +230,19 @@ function drawLaunch(speed, angle, dist, height) {
             y = diskHeight;
             if (x < dist) {
                 time += elapsed / 1000;
+                diskAngle = Math.atan2(lastY - y, lastX - x) * 180 / Math.PI;
             }
             ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 5.17262753, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
 
-            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
+            console.log(diskAngle);
+            drawRotatedImage(ctx, disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), diskAngle);
+
+            // ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
+            lastX = x;
+            lastY = y;
             // console.log(x, y);
         }
         else {
