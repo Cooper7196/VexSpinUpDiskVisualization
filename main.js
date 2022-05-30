@@ -230,14 +230,10 @@ function drawLaunch(speed, angle, dist, height) {
             y = diskHeight;
             if (x < dist) {
                 time += elapsed / 1000;
-                diskAngle = Math.atan2(lastY - y, lastX - x) * 180 / Math.PI;
             }
             ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 5.17262753, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
 
-            console.log(diskAngle);
-            drawRotatedImage(ctx, disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), diskAngle);
-
-            // ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
+            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
