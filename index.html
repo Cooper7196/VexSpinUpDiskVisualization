@@ -11,8 +11,8 @@
 
     <style>
         .outsideWrapper {
-            width: 40vw;
-            height: 40vw;
+            width: min(70vh, 40vw);
+            height: min(70vh, 40vw);
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -69,10 +69,12 @@
         }
 
         #diskCanvas {
-            width: 100%;
-            height: 90%;
+            width: min(70vh, 40vw);
+            height: min(70vh, 40vw);
             border: 2px solid red;
             border-radius: 5px;
+            margin: auto;
+            display: block;
 
         }
 
@@ -107,10 +109,10 @@
         <div class="grid-item">
             <div class="outsideWrapper">
                 <div class="insideWrapper">
-                    <img src="SpinUpField.png" class="coveredImage">
+                    <img src="images/SpinUpField.png" class="coveredImage">
                     <canvas class="coveringCanvas" id="canvas"></canvas>
                     <div id="loadingDiv">
-                        <img id="loadingImg" src="https://media0.giphy.com/media/3o7bu3XilJ5BOiSGic/giphy.gif" />
+                        <img id="loadingImg" src="images/loading.gif" />
                     </div>
 
                 </div>

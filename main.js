@@ -34,6 +34,10 @@ function round(value, precision) {
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+let disk = new Image()
+let goal = new Image()
+disk.src = "images/disk.png";
+goal.src = "images/goal.png";
 
 var angleRangeElement = document.getElementById("angleRange");
 document.querySelector("#loadingDiv").style.display = "none";
@@ -67,7 +71,7 @@ canvas.addEventListener('mousemove', event => {
     document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in / " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
-        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: " + round(velocities[x][y] / ((diameter / 39.37) * Math.PI) * 60) + " rpm";
+        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: " + round(velocities[x][y] / ((diameter / 39.37) * Math.PI) * 60) * 2 + " rpm";
 
     }
     else {
@@ -195,8 +199,7 @@ function drawRotatedImage(context, image, x, y, angle) {
 
 
 function drawLaunch(speed, angle, dist, height) {
-    let disk = new Image()
-    let goal = new Image()
+
     let ctx = diskCanvas.getContext("2d")
     let x = 0;
     let y = 0;
@@ -204,12 +207,9 @@ function drawLaunch(speed, angle, dist, height) {
     let lastY = 0;
     let time = 0;
     let lastTimeStamp = 0;
-
     disk.onload = function () {
         requestAnimationFrame(animate);
     }
-    disk.src = "disk.png";   // load image
-    goal.src = "goal.png";   // load image
     function animate(timestamp) {
         if (lastTimeStamp == undefined) {
             requestAnimationFrame(animate);
