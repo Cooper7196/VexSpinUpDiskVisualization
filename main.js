@@ -210,7 +210,10 @@ function drawLaunch(speed, angle, dist, height) {
     disk.onload = function () {
         requestAnimationFrame(animate);
     }
+    requestAnimationFrame(animate);
+    console.log("test");
     function animate(timestamp) {
+        console.log("test1");
         if (lastTimeStamp == undefined) {
             requestAnimationFrame(animate);
             return
