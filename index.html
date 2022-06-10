@@ -101,6 +101,13 @@
         #flywheelDiameter {
             -moz-appearance: textfield;
         }
+
+        .form-select {
+            width: 50%;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+        }
     </style>
 </head>
 
@@ -130,6 +137,13 @@
                 <input type="number" class="form-control" id="initHeight" step="0.1" value="14">
                 <label for="flywheelDiameter" class="form-label">Flywheel Diameter(in): </label>
                 <input type="number" class="form-control" id="flywheelDiameter" step="0.01" value="4">
+                <label for="TargetHeight" class="form-label">Goal Target Area: </label>
+                <select class="form-select" id="targetHeight">
+                    <option value="0.902">Top</option>
+                    <option value="0.768" selected>Middle</option>
+                    <option value="0.635">Bottom</option>
+                </select>
+
 
             </form>
         </div>

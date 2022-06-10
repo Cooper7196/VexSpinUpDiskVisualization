@@ -45,6 +45,8 @@ document.querySelector("#loadingDiv").style.display = "none";
 let angle = 45;
 let diameter = 4;
 let initHeight = 14;
+let targetHeight = 0.635;
+
 canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
 canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
 
@@ -103,7 +105,7 @@ canvas.addEventListener('click', event => {
     y = round(y.map(0, size[1], 0, canvas.height));
     let distX = Math.hypot((3.6576 - 0.451612) - x.map(0, canvas.width, 0, 3.6576), 0.441706 - y.map(0, canvas.height, 0, 3.6576));
     if (velocities[x][y] == velocities[x][y]) {
-        drawLaunch(velocities[x][y], angle, distX, (0.635 - initHeight / 39.37));
+        drawLaunch(velocities[x][y], angle, distX, (targetHeight - initHeight / 39.37));
     }
 });
 
@@ -137,6 +139,19 @@ document.getElementById("initHeight").addEventListener('input', event => {
     }, 1000)
 });
 
+document.getElementById("targetHeight").addEventListener('input', event => {
+    targetHeight = parseFloat(event.target.value);
+    document.querySelector("#loadingDiv").style.display = "block";
+    console.log(document.querySelector("#loadingDiv").style.visibility);
+    setTimeout(function () {
+        if (targetHeight == event.target.value) {
+            velocities = generateMap(size);
+            draw(velocities);
+            document.querySelector("#loadingDiv").style.display = "none";
+        }
+    }, 1000)
+});
+
 
 document.getElementById("flywheelDiameter").addEventListener('input', event => {
     diameter = event.target.value;
@@ -162,7 +177,7 @@ function generateMap(size) {
         for (let j = 0; j < size[1]; j++) {
 
             let distX = Math.hypot((3.6576 - 0.451612) - i.map(0, canvas.width, 0, 3.6576), 0.441706 - j.map(0, canvas.height, 0, 3.6576));
-            let velocity = distX / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (distX * Math.tan(angle * 3.14159265 / 180.0) - (0.635 - initHeight / 39.37))));
+            let velocity = distX / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (distX * Math.tan(angle * 3.14159265 / 180.0) - (targetHeight - initHeight / 39.37))));
             velocities[i][j] = velocity;
         }
     }
@@ -211,9 +226,7 @@ function drawLaunch(speed, angle, dist, height) {
         requestAnimationFrame(animate);
     }
     requestAnimationFrame(animate);
-    console.log("test");
     function animate(timestamp) {
-        console.log("test1");
         if (lastTimeStamp == undefined) {
             requestAnimationFrame(animate);
             return
@@ -223,7 +236,7 @@ function drawLaunch(speed, angle, dist, height) {
         }
         // console.log("y: " + y + " x: " + x);
         if (y > -0.1) {
-            let speed = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - (0.635 - initHeight / 39.37))));
+            let speed = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - (targetHeight - initHeight / 39.37))));
             elapsed = timestamp - lastTimeStamp;
             ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
 
