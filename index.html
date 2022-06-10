@@ -108,10 +108,20 @@
             margin-right: auto;
             margin-left: auto;
         }
+
+        .header {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <div class="header">
+        <h1>VEX Spin Up Disk Visualization</h1>
+        <h5>Made by Team 614A</h5>
+        <br>
+    </div>
+
     <div class="grid-container">
         <div class="grid-item">
             <div class="outsideWrapper">
@@ -129,18 +139,18 @@
 
 
             <h3 id="angleHeading" style="text-align: center;">
-                Angle: 45°
+                Angle: 30°
             </h3>
             <form style="text-align: center;" action="javascript:void(0);">
-                <input type="range" class="form-range" id="angleRange" min="1" max="89" step="1">
+                <input type="range" class="form-range" id="angleRange" min="1" max="89" step="1" value="30">
                 <label for="initHeight" class="form-label">Launch Height(in): </label>
                 <input type="number" class="form-control" id="initHeight" step="0.1" value="14">
                 <label for="flywheelDiameter" class="form-label">Flywheel Diameter(in): </label>
                 <input type="number" class="form-control" id="flywheelDiameter" step="0.01" value="4">
                 <label for="TargetHeight" class="form-label">Goal Target Area: </label>
                 <select class="form-select" id="targetHeight">
-                    <option value="0.902">Top</option>
-                    <option value="0.768" selected>Middle</option>
+                    <option value="0.889">Top</option>
+                    <option value="0.762" selected>Middle</option>
                     <option value="0.635">Bottom</option>
                 </select>
 

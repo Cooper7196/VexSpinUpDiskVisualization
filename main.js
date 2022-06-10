@@ -42,10 +42,10 @@ goal.src = "images/goal.png";
 var angleRangeElement = document.getElementById("angleRange");
 document.querySelector("#loadingDiv").style.display = "none";
 
-let angle = 45;
+let angle = 30;
 let diameter = 4;
 let initHeight = 14;
-let targetHeight = 0.635;
+let targetHeight = 0.762;
 
 canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
 canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
@@ -173,6 +173,7 @@ function draw(velocities) {
 
 function generateMap(size) {
     let velocities = makeArray(size[0], size[1]);
+    console.log("Angle: " + angle);
     for (let i = 0; i < size[0]; i++) {
         for (let j = 0; j < size[1]; j++) {
 
@@ -247,9 +248,9 @@ function drawLaunch(speed, angle, dist, height) {
             if (x < dist) {
                 time += elapsed / 1000;
             }
-            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 5.17262753, 0, diskCanvas.height) - 80, goal.height * 0.5, goal.height * 0.5);
+            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 3.038929, 0, diskCanvas.height) - 55, goal.height * 0.187 * 2 * 0.875, goal.height * 0.187 * 2 * 0.875);
 
-            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 5.17262753, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
+            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 3.038929, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
