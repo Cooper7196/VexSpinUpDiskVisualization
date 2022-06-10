@@ -248,7 +248,7 @@ function drawLaunch(speed, angle, dist, height) {
             if (x < dist) {
                 time += elapsed / 1000;
             }
-            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 3.038929, 0, diskCanvas.height) - 55, goal.height * 0.187 * 2 * 0.875, goal.height * 0.187 * 2 * 0.875);
+            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 3.038929, 0, diskCanvas.height) - 55 * 670 / diskCanvas.height, goal.height * 0.187 * 2 * 0.875, goal.height * 0.187 * 2 * 0.875);
 
             ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 3.038929, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
