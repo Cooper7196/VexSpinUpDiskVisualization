@@ -68,8 +68,7 @@ canvas.addEventListener('mousemove', event => {
     document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in | " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y] * 3.281, 2) + " ft/s | " + round(velocities[x][y], 2) + " m/s";
-    }
-    else {
+    } else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
     }
 });
@@ -185,6 +184,7 @@ function diskPos(time, speed, angle) {
 
 
 var TO_RADIANS = Math.PI / 180;
+
 function drawRotatedImage(context, image, x, y, angle) {
     // save the current co-ordinate system 
     // before we screw with it
@@ -222,6 +222,7 @@ function drawLaunch(speed, angle, dist, height) {
     }
     console.log(diskCanvas.width, diskCanvas.height);
     requestAnimationFrame(animate);
+
     function animate(timestamp) {
         if (lastTimeStamp == undefined) {
             requestAnimationFrame(animate);
@@ -234,7 +235,7 @@ function drawLaunch(speed, angle, dist, height) {
         if (y > -0.1) {
             let speed = dist / Math.cos(angle * Math.PI / 180.0) * Math.sqrt(9.81 / (2 * (dist * Math.tan(angle * 3.14159265 / 180.0) - (targetHeight - initHeight / 39.37))));
             elapsed = timestamp - lastTimeStamp;
-            ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height);  // clear diskCanvas
+            ctx.clearRect(0, 0, diskCanvas.width, diskCanvas.height); // clear diskCanvas
 
 
             x = speed * Math.cos(angle * Math.PI / 180) * time;
@@ -245,15 +246,14 @@ function drawLaunch(speed, angle, dist, height) {
             }
             ctx.drawImage(goal, dist.map(0, canvasWidthMeters, 0, diskCanvas.width), diskCanvas.height - (0.635 + 0.2667).map(0, canvasHeightMeters, 0, diskCanvas.height), 0.4.map(0, canvasWidthMeters, 0, diskCanvas.width), 0.37.map(0, canvasHeightMeters, 0, diskCanvas.height));
 
-            ctx.drawImage(disk, x.map(0, canvasWidthMeters, 0, diskCanvas.width), diskCanvas.height - y.map(0, canvasHeightMeters, 0, diskCanvas.height), disk.width * 0.05, disk.height * 0.05);
-
+            ctx.drawImage(disk, x.map(0, canvasWidthMeters, 0, diskCanvas.width), diskCanvas.height - y.map(0, canvasHeightMeters, 0, diskCanvas.height), 0.14.map(0, canvasHeightMeters, 0, diskCanvas.height), 0.02.map(0, canvasHeightMeters, 0, diskCanvas.height));
+            // 0.139954
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
             lastX = x;
             lastY = y;
             // console.log(x, y);
-        }
-        else {
+        } else {
             lastTimeStamp = 0;
         }
     }
