@@ -65,10 +65,9 @@ canvas.addEventListener('mousemove', event => {
     feet = Math.floor(inches / 12);
     inches = round(inches % 12);
 
-    document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in / " + round(distX, 2) + " m";
+    document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in | " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
-        document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
-
+        document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y] * 3.281, 2) + " ft/s | " + round(velocities[x][y], 2) + " m/s";
     }
     else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
@@ -210,6 +209,8 @@ function drawRotatedImage(context, image, x, y, angle) {
 function drawLaunch(speed, angle, dist, height) {
 
     let ctx = diskCanvas.getContext("2d")
+    canvasWidthMeters = 4.9;
+    canvasHeightMeters = 4.9;
     let x = 0;
     let y = 0;
     let lastX = 0;
@@ -242,9 +243,9 @@ function drawLaunch(speed, angle, dist, height) {
             if (x < dist) {
                 time += elapsed / 1000;
             }
-            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - (0.635 * 1.4).map(0, 3.038929, 0, diskCanvas.height), goal.height * 0.187 * 2 * 0.875 * 1.45700, goal.height * 0.187 * 2 * 0.875 * 1.45700);
+            ctx.drawImage(goal, dist.map(0, canvasWidthMeters, 0, diskCanvas.width), diskCanvas.height - (0.635 + 0.2667).map(0, canvasHeightMeters, 0, diskCanvas.height), 0.4.map(0, canvasWidthMeters, 0, diskCanvas.width), 0.37.map(0, canvasHeightMeters, 0, diskCanvas.height));
 
-            ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 3.038929, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
+            ctx.drawImage(disk, x.map(0, canvasWidthMeters, 0, diskCanvas.width), diskCanvas.height - y.map(0, canvasHeightMeters, 0, diskCanvas.height), disk.width * 0.05, disk.height * 0.05);
 
             lastTimeStamp = timestamp;
             requestAnimationFrame(animate);
