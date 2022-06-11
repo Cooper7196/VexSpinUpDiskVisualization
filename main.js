@@ -210,7 +210,7 @@ function drawLaunch(speed, angle, dist, height) {
 
     let ctx = diskCanvas.getContext("2d")
     canvasWidthMeters = 4.9;
-    canvasHeightMeters = 4.9;
+    canvasHeightMeters = 4.9 / 3;
     let x = 0;
     let y = 0;
     let lastX = 0;
