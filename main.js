@@ -2,11 +2,6 @@ Number.prototype.map = function (in_min, in_max, out_min, out_max) {
     return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-var getColorAtScalar = function (n, maxLength) {
-    var n = n * 240 / (maxLength);
-    return 'hsl(' + n + ',100%,50%)';
-}
-
 
 function RainBowColor(length, maxLength) {
     var i = (length * 255 / maxLength);
@@ -73,12 +68,10 @@ canvas.addEventListener('mousemove', event => {
     document.getElementById("distance").innerHTML = "Dist: " + feet + " ft " + inches + " in / " + round(distX, 2) + " m";
     if (velocities[x][y] == velocities[x][y]) {
         document.getElementById("velocity").innerHTML = "Speed: " + round(velocities[x][y], 2) + " m/s";
-        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: " + round(velocities[x][y] / ((diameter / 39.37) * Math.PI) * 60) * 2 + " rpm";
 
     }
     else {
         document.getElementById("velocity").innerHTML = "Impossible at this location";
-        document.getElementById("flywheelSpeed").innerHTML = "Flywheel Speed: N/A";
     }
 });
 
@@ -90,9 +83,13 @@ window.addEventListener("resize", () => {
         console.log(canvas.width, canvas.height);
         size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
         velocities = generateMap(size);
+        diskCanvas = document.getElementById('diskCanvas');
+        diskCanvas.width = diskCanvas.getBoundingClientRect().width;
+        diskCanvas.height = diskCanvas.getBoundingClientRect().height;
         draw(velocities);
         document.querySelector("#loadingDiv").style.display = "none";
         console.log(size);
+
     }, 1000)
 });
 
@@ -153,10 +150,6 @@ document.getElementById("targetHeight").addEventListener('input', event => {
 });
 
 
-document.getElementById("flywheelDiameter").addEventListener('input', event => {
-    diameter = event.target.value;
-    document.getElementById("angleHeading").innerHTML = "Angle: " + angle + "°";
-});
 function draw(velocities) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (let i = 0; i < velocities.length; i++) {
@@ -226,6 +219,7 @@ function drawLaunch(speed, angle, dist, height) {
     disk.onload = function () {
         requestAnimationFrame(animate);
     }
+    console.log(diskCanvas.width, diskCanvas.height);
     requestAnimationFrame(animate);
     function animate(timestamp) {
         if (lastTimeStamp == undefined) {
@@ -248,7 +242,7 @@ function drawLaunch(speed, angle, dist, height) {
             if (x < dist) {
                 time += elapsed / 1000;
             }
-            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - 0.635.map(0, 3.038929, 0, diskCanvas.height) - 55 * 670 / diskCanvas.height, goal.height * 0.187 * 2 * 0.875, goal.height * 0.187 * 2 * 0.875);
+            ctx.drawImage(goal, dist.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - (0.635 * 1.4).map(0, 3.038929, 0, diskCanvas.height), goal.height * 0.187 * 2 * 0.875 * 1.45700, goal.height * 0.187 * 2 * 0.875 * 1.45700);
 
             ctx.drawImage(disk, x.map(0, 5.17262753, 0, diskCanvas.width), diskCanvas.height - y.map(0, 3.038929, 0, diskCanvas.height), disk.width * 0.1, disk.height * 0.1);
 
@@ -263,7 +257,6 @@ function drawLaunch(speed, angle, dist, height) {
         }
     }
 }
-
 diskCanvas = document.getElementById('diskCanvas');
 diskCanvas.width = diskCanvas.getBoundingClientRect().width;
 diskCanvas.height = diskCanvas.getBoundingClientRect().height;

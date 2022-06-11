@@ -64,8 +64,10 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: auto auto;
             padding: 10px;
+            width: 100% !important;
+
         }
 
         #diskCanvas {
@@ -145,8 +147,6 @@
                 <input type="range" class="form-range" id="angleRange" min="1" max="89" step="1" value="30">
                 <label for="initHeight" class="form-label">Launch Height(in): </label>
                 <input type="number" class="form-control" id="initHeight" step="0.1" value="14">
-                <label for="flywheelDiameter" class="form-label">Flywheel Diameter(in): </label>
-                <input type="number" class="form-control" id="flywheelDiameter" step="0.01" value="4">
                 <label for="TargetHeight" class="form-label">Goal Target Area: </label>
                 <select class="form-select" id="targetHeight">
                     <option value="0.889">Top</option>
@@ -161,7 +161,6 @@
             <canvas id="diskCanvas"></canvas>
             <h3 id="distance" style="text-align: center;"></h3>
             <h3 id="velocity" style="text-align: center;"></h3>
-            <h3 id="flywheelSpeed" style="text-align: center;"></h3>
         </div>
         <script src="main.js"></script>
     </div>
