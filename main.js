@@ -76,18 +76,19 @@ canvas.addEventListener('mousemove', event => {
 window.addEventListener("resize", () => {
     document.querySelector("#loadingDiv").style.display = "block";
     setTimeout(function () {
-        canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
-        canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
-        console.log(canvas.width, canvas.height);
-        size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
-        velocities = generateMap(size);
-        diskCanvas = document.getElementById('diskCanvas');
-        diskCanvas.width = diskCanvas.getBoundingClientRect().width;
-        diskCanvas.height = diskCanvas.getBoundingClientRect().height;
-        draw(velocities);
-        document.querySelector("#loadingDiv").style.display = "none";
-        console.log(size);
-
+        if (Math.min(500, canvas.getBoundingClientRect().width) != canvas.width || Math.min(500, canvas.getBoundingClientRect().height) != canvas.height) {
+            canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
+            canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
+            console.log(canvas.width, canvas.height);
+            size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
+            velocities = generateMap(size);
+            diskCanvas = document.getElementById('diskCanvas');
+            diskCanvas.width = diskCanvas.getBoundingClientRect().width;
+            diskCanvas.height = diskCanvas.getBoundingClientRect().height;
+            draw(velocities);
+            document.querySelector("#loadingDiv").style.display = "none";
+            console.log(size);
+        }
     }, 1000)
 });
 
@@ -209,6 +210,7 @@ function drawRotatedImage(context, image, x, y, angle) {
 function drawLaunch(speed, angle, dist, height) {
 
     let ctx = diskCanvas.getContext("2d")
+    ctx.mozImageSmoothingEnabled = ctx.imageSmoothingEnabled = ctx.webkitImageSmoothingEnabled = ctx.msImageSmoothingEnabled = true;
     canvasWidthMeters = 4.9;
     canvasHeightMeters = 4.9 / 3;
     let x = 0;
