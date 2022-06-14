@@ -47,7 +47,7 @@ canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
 
 console.log(canvas.width, canvas.height);
 
-let size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
+var size = [canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height];
 let startPos = [0, 0];
 let velocities = generateMap([canvas.width, canvas.height]);
 draw(velocities);
@@ -76,7 +76,7 @@ canvas.addEventListener('mousemove', event => {
 window.addEventListener("resize", () => {
     document.querySelector("#loadingDiv").style.display = "block";
     setTimeout(function () {
-        if (Math.min(500, canvas.getBoundingClientRect().width) != canvas.width || Math.min(500, canvas.getBoundingClientRect().height) != canvas.height) {
+        if (canvas.getBoundingClientRect().width != size[0] || canvas.getBoundingClientRect().height != size[1]) {
             canvas.width = Math.min(500, canvas.getBoundingClientRect().width);
             canvas.height = Math.min(500, canvas.getBoundingClientRect().height);
             console.log(canvas.width, canvas.height);
