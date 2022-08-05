@@ -125,7 +125,6 @@ document.getElementById("initHeight").addEventListener('input', event => {
     initHeight = event.target.value;
     document.querySelector("#loadingDiv").style.display = "block";
     console.log(document.querySelector("#loadingDiv").style.visibility);
-    angle = event.target.value;
     setTimeout(function () {
         if (initHeight == event.target.value) {
             velocities = generateMap(size);
